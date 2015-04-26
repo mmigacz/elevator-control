@@ -10,6 +10,7 @@ type Elevator struct {
 	ElevatorId  int
 	FloorNumber int
 	Direction   int
+	Open        bool
 	floorsUp    *floorsQueue
 	floorsDown  *floorsQueue
 }
@@ -23,15 +24,15 @@ func NewElevator(id int) *Elevator {
 }
 
 func (e *Elevator) Str() string {
-	direction := "stop"
+	direction := "none"
 	if e.Direction > 0 {
 		direction = "up"
 	} else if e.Direction < 0 {
 		direction = "down"
 	}
 
-	return fmt.Sprintf("id:[%d], floor:[%d], direction:[%s], upq:[%d], downq:[%d]", e.ElevatorId,
-		e.FloorNumber, direction, e.floorsUp.Len(), e.floorsDown.Len())
+	return fmt.Sprintf("id:[%d], floor:[%d], open:[%t] direction:[%s], upq:[%d], downq:[%d]", e.ElevatorId,
+		e.FloorNumber, e.Open, direction, e.floorsUp.Len(), e.floorsDown.Len())
 }
 
 func (e *Elevator) update(goToFloor int) {
@@ -48,6 +49,9 @@ func (e *Elevator) step() {
 		l := len(fq.floors)
 		if l > 0 && fq.floors[l-1] == e.FloorNumber {
 			e.FloorNumber = heap.Pop(fq).(int)
+			e.Open = true
+		} else {
+			e.Open = false
 		}
 	}
 

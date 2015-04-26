@@ -52,7 +52,6 @@ func (ec *ElevatorController) Pickup(floor, direction int) {
 	// and start it
 	if len(elevators) > 0 {
 		sort.Sort(ElevatorByDistance{Elevators: elevators, Floor: floor})
-
 		elevators[0].update(floor)
 	}
 }
