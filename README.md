@@ -17,11 +17,12 @@ After start the application will prompt you a command line. Type anything + Ente
   ```
   #id - elevator's id
   #floor - current flor
+  #open - true if doors are open on the current floor
   #direction - stop|up|down - current state of the elevator
   #upq - lenght of the queue with stops above
   #downq - lenght of the queue with stops below
-  id:[0], floor:[0], direction:[stop], upq:[0], downq:[0]
-  id:[1], floor:[0], direction:[stop], upq:[0], downq:[0]
+  id:[0], floor:[4], open:[false] direction:[up], upq:[1], downq:[0]
+  id:[1], floor:[0], open:[false] direction:[none], upq:[0], downq:[0]
   ```
 * *step* - next step of the simulation
 * *update elevator_id floor_id* - add destination floor_id to the elevator_id. Reflects pressing a button in the elevator.
