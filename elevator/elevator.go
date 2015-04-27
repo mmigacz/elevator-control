@@ -6,6 +6,11 @@ import (
 	"math"
 )
 
+type pickup struct {
+	floorNumber int
+	direction   int
+}
+
 type Elevator struct {
 	ElevatorId  int
 	FloorNumber int
@@ -88,6 +93,7 @@ func (a ElevatorById) Less(i, j int) bool { return a[i].ElevatorId < a[j].Elevat
 type ElevatorByDistance struct {
 	Elevators []*Elevator
 	Floor     int
+	Direction int
 }
 
 func (a ElevatorByDistance) Len() int { return len(a.Elevators) }

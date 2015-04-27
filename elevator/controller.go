@@ -43,16 +43,33 @@ func (ec *ElevatorController) Update(elevatorId, floor int) {
 func (ec *ElevatorController) Pickup(floor, direction int) {
 	// find the nearest elevator which stays
 	elevators := make([]*Elevator, 0)
+
+	isOnPath := func(fq *floorsQueue) bool {
+		l := len(fq.floors)
+		return l > 0 && ((fq.up && fq.floors[l-1] <= floor) || (!fq.up && fq.floors[l-1] >= floor))
+	}
+
 	for _, v := range ec.Elevators {
+		//if any elevator is on path, than just take it
+		if (v.Direction > 0 && direction > 0 && isOnPath(v.floorsUp)) ||
+			(v.Direction < 0 && direction < 0 && isOnPath(v.floorsDown)) {
+			v.update(floor)
+
+			return
+		}
+
 		if v.Direction == 0 {
 			elevators = append(elevators, v)
 		}
 	}
 
-	// and start it
+	// if no lift on path, take a free one
 	if len(elevators) > 0 {
 		sort.Sort(ElevatorByDistance{Elevators: elevators, Floor: floor})
 		elevators[0].update(floor)
+	} else {
+		//otherwise take any
+		ec.Update(0, floor)
 	}
 }
 
