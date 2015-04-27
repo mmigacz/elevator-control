@@ -30,4 +30,10 @@ After start the application will prompt you a command line. Type anything + Ente
 * *exit* - exits application
 
 ## How it works
+On pickup
+
+1. Than take a first elevator on way (up/down)
+2. If no elevator on way, than take the closes waiting
+3. If no waiting, than schedule the first one
+ 
 
